@@ -1,6 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
 using UnityEditor;
-using System;
+using UnityEngine;
 
 public class CustomShaderGUI : ShaderGUI
 {
@@ -10,7 +10,7 @@ public class CustomShaderGUI : ShaderGUI
 
         Material targetMat = materialEditor.target as Material;
 
-        bool redify = Array.IndexOf(targetMat.shaderKeywords, "REDIFY_ON")!=-1;
+        bool redify = Array.IndexOf(targetMat.shaderKeywords, "REDIFY_ON") != -1;
         EditorGUI.BeginChangeCheck();
         redify = EditorGUILayout.Toggle("Redify material", redify);
         if (EditorGUI.EndChangeCheck())
