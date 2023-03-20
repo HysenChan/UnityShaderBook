@@ -6,7 +6,7 @@
 			#pragma vertex vert
 			#pragma fragment frag
 
-			//使用一个结构体来定义顶点着色器的输入
+			// 使用一个结构体来定义顶点着色器的输入（应用阶段->顶点着色器阶段）
 			struct a2v{
 				// POSITION语义告诉Unity，用模型空间的顶点坐标填充vertex变量
 				float4 vertex : POSITION;
@@ -16,12 +16,27 @@
 				float4 texcoord : TEXCOORD0;
 			};
 
-			float4 vert(a2v v) : SV_POSITION{
-				return mul(UNITY_MATRIX_MVP, v.vertex);
+			// 使用一个结构体来定义顶点着色器的输出（顶点着色器阶段->片元着色器阶段）
+			struct v2f{
+				// SV_POSITION语义告诉Unity，pos里包含了顶点在裁剪空间中的位置信息
+				float4 pos : SV_POSITION;
+				// COLOR0语义可以用于存储颜色信息
+				fixed3 color : COLOR0;
+			};
+
+			v2f vert(a2v v){
+				// 声明输出结构
+				v2f o;
+				o.pos = mul(UNITY_MATRIX_MVP, v.vertex);
+				// v.normal包含了顶点的法线方向，其分量范围在[-1.0,1.0]
+				// 下面的代码把分量范围映射到了[0.0,1.0]
+				// 存储到o.color中传递给片元着色器
+				o.color = v.normal * 0.5 + fixed3(0.5, 0.5, 0.5);
+				return o;
 			}
 
-			fixed4 frag() : SV_Target {
-				return fixed4(1.0, 1.0, 1.0, 1.0);
+			fixed4 frag(v2f i) : SV_Target {
+				return fixed4(i.color, 1.0);
 			}
 
 			ENDCG
