@@ -1,10 +1,17 @@
 ﻿Shader "Custom/Chapter5-SimpleShader" {
+	Properties{
+		// 声明一个Color类型的属性
+		_Color ("Color Tint", Color) = (1.0, 1.0, 1.0, 1.0)
+	}
 	SubShader{
 		Pass{
 			CGPROGRAM
 
 			#pragma vertex vert
 			#pragma fragment frag
+
+			// 在CG代码中，我们需要定义一个与属性名称和类型都匹配的变量
+			fixed4 _Color;
 
 			// 使用一个结构体来定义顶点着色器的输入（应用阶段->顶点着色器阶段）
 			struct a2v{
@@ -36,7 +43,10 @@
 			}
 
 			fixed4 frag(v2f i) : SV_Target {
-				return fixed4(i.color, 1.0);
+				fixed3 c = i.color;
+				//使用_Color属性来控制输出颜色
+				c*=_Color.rgb;
+				return fixed4(c, 1.0);
 			}
 
 			ENDCG
