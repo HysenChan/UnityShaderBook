@@ -88,5 +88,5 @@
 			ENDCG
 		}
 	}
-	FallBack "Specualr"
+	FallBack "Specular"
 }
