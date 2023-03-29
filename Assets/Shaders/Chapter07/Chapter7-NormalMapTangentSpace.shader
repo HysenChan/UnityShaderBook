@@ -46,7 +46,7 @@
 				o.pos = mul(UNITY_MATRIX_MVP, v.vertex);
 
 				o.uv.xy = v.texcoord.xy * _MainTex_ST.xy + _MainTex_ST.zw;
-				o.uv.zw = v.texcoord.zw * _BumpMap_ST.xy + _BumpMap_ST.zw;
+				o.uv.zw = v.texcoord.xy * _BumpMap_ST.xy + _BumpMap_ST.zw;
 
 				//float3 binormal = cross(normalize(v.normal), normalize(v.tangent.xyz)) * v.tangent.w;
 
