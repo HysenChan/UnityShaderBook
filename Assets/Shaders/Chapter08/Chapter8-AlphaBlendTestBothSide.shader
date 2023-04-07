@@ -5,7 +5,7 @@
 		_AlphaScale ("Alpha Scale", Range(0,1)) = 1
 	}
 	SubShader {
-		Tags {"Queue"="AlphaTest" "IgnoreProjector"="True" "RenderType"="TransparentCutout"}
+		Tags {"Queue"="Transparent" "IgnoreProjector"="True" "RenderType"="Transparent"}
 
 		Pass {
 			Tags {"LightMode"="ForwardBase"}
